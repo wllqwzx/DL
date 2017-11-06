@@ -3,6 +3,13 @@ import numpy as np
 import sklearn
 from sklearn.datasets import fetch_california_housing
 
+#====== add the following at the begining
+from datetime import datetime
+now = datetime.utcnow().strftime("%Y%m%d%H%M%S") 
+root_logdir = "tf_logs" 
+logdir = "{}/run-{}/".format(root_logdir, now)
+
+
 housing = fetch_california_housing() 
 m, n = housing.data.shape 
 housing_data_plus_bias = np.c_[np.ones((m, 1)), housing.data]
@@ -28,10 +35,14 @@ mse = tf.reduce_mean(tf.square(error), name="mse")      # total loss
 optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate, momentum=0.9)
 training_op = optimizer.minimize(mse)
 
+#====== add thoes code after the graph was defined
+mse_summary = tf.summary.scalar('MSE', mse)
+file_writer = tf.summary.FileWriter(logdir, tf.get_default_graph())
 
-# eval the graph in a session and save all of the parameters
+
+
+# eval the graph in a session
 init = tf.global_variables_initializer()
-saver = tf.train.Saver()    #======= create a saver
 
 with tf.Session() as sess:
     sess.run(init)
@@ -39,18 +50,13 @@ with tf.Session() as sess:
     for epoch in range(n_epochs):
         if epoch % 100 == 0:
             print("epoch:", epoch, " MSE=", mse.eval())
-            save_path = saver.save(sess, "/tmp/my_model.ckpt")  #====== save during training
         sess.run(training_op)
 
+        #====== add those two lines
+        summary_str = mse_summary.eval()    
+        file_writer.add_summary(summary_str, epoch)
+
     best_theta = theta.eval()
-    save_path = saver.save(sess, "/tmp/my_model_final.ckpt")    #====== save after traning
 
 print("best theta:", best_theta)
-
-
-# restoring all the parameters in asession
-with tf.Session() as sess:
-    saver.restore(sess,"/tmp/my_model_final.ckpt")  #====== restore the parameters
-    restored_best_theta = theta.eval()
-
-print("restored best theta:", restored_best_theta)
+file_writer.close() #====== close the fileWriter
