@@ -60,3 +60,9 @@ with tf.Session() as sess:
 
 print("best theta:", best_theta)
 file_writer.close() #====== close the fileWriter
+
+'''
+after run this script, open a terminal in the same path, and type the following command:
+
+>>$tensorboard --logdir tf_logs/
+'''

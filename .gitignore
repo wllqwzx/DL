@@ -1,2 +1,8 @@
 
 *.localhost
+
+*.local
+
+*.index
+
+*.meta
