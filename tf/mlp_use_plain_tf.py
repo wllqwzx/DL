@@ -43,10 +43,10 @@ with tf.name_scope("dnn"):
 #and it take cares more things like regulizations. To use it, write the following code:
 
 from tensorflow.contrib.layers import fully_connected
-with tf.name_scope("dnn"):
-    hidden1 = fully_connected(X, n_hidden1, scope="hidden1") 
-    hidden2 = fully_connected(hidden1, n_hidden2, scope="hidden2") 
-    logits = fully_connected(hidden2, n_outputs, scope="outputs", activation_fn=None)
+
+hidden1 = fully_connected(X, n_hidden1, scope="hidden1") 
+hidden2 = fully_connected(hidden1, n_hidden2, scope="hidden2") 
+logits = fully_connected(hidden2, n_outputs, scope="outputs", activation_fn=None)
 '''
 
 with tf.name_scope("loss"):
