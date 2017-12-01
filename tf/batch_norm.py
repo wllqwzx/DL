@@ -1,6 +1,6 @@
 import tensorflow as tf
-from tensorflow.contrib.layers import fully_connected
-from tensorflow.contrib.layers import batch_norm
+from tensorflow.contrib.layers import fully_connected   #!!!
+from tensorflow.contrib.layers import batch_norm        #!!!
 import numpy as np
 from tensorflow.examples.tutorials.mnist import input_data
 from datetime import datetime

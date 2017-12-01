@@ -20,3 +20,5 @@ from sklearn.metrics import accuracy_score
 y_pred = dnn_clf.predict(X_test)
 score = accuracy_score(y_test, y_pred['classes'])
 print(score)
+
+
