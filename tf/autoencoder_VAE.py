@@ -58,7 +58,7 @@ loss = reconstruction_loss + latent_loss
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
 training_op = optimizer.minimize(loss)
 
-n_epochs = 50
+n_epochs = 5
 n_digits = 60
 batch_size = 150
 
@@ -78,7 +78,7 @@ with tf.Session() as sess:
 
 
 for iteration in range(n_digits):
-    #plt.subplot(n_digits/10, 10, iteration+1)
-    #plot_image(sample_outputs[iteration])
-    plt.imsave("img"+str(iteration)+".jpg", sample_outputs[iteration].reshape([28,28]), cmap="Greys")
-#plt.show()
+    plt.subplot(n_digits/10, 10, iteration+1)
+    plot_image(sample_outputs[iteration])
+    #plt.imsave("img"+str(iteration)+".jpg", sample_outputs[iteration].reshape([28,28]), cmap="Greys")
+plt.show()
