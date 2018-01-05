@@ -19,7 +19,7 @@ def get_batch(data, batch, batch_size):
 
 #=====
 n_input = 28*28
-n_hidden = 100
+n_hidden = 1000     #!!! sparse aitoencoder need code to be over-complete!!!
 n_output = n_input
 
 learning_rate = 0.01
@@ -31,7 +31,7 @@ hidden = fully_connected(X, n_hidden, activation_fn=tf.nn.sigmoid)
 logits = fully_connected(hidden, n_output, activation_fn = None)
 output = tf.nn.sigmoid(logits)
 
-hidden_mean = tf.reduce_mean(hidden, axis=0) #batch mean
+hidden_mean = tf.reduce_mean(hidden, axis=1) # mean over one image
 sparse_loss = tf.reduce_sum(kl(target_sparsity, hidden_mean))
 reconstruction_loss = tf.reduce_mean(tf.square(output-X))
 loss = reconstruction_loss + sparsity_weight*sparse_loss
@@ -47,11 +47,11 @@ init = tf.global_variables_initializer()
 with tf.Session() as sess:
     init.run()
     for epoch in range(n_epochs):
-        n_batches = mnist.train.num_examples // batch_size
+        n_batches = mnist.train.num_examples // batch_size + 1
         for batch in range(n_batches):
             X_batch = get_batch(X_train, batch, batch_size)
             sess.run(training_op, feed_dict={X:X_batch})
-        recons_loss = sess.run(reconstruction_loss, feed_dict={X:X_train})
-        spar_loss = sess.run(sparse_loss, feed_dict={X:X_train})
+        recons_loss, spar_loss, tot_loss = sess.run([reconstruction_loss, sparse_loss, loss], feed_dict={X:X_train})
         print("epochs:", epoch, "recons loss:", recons_loss, 
-              "sparse loss:", spar_loss, "loss:", recons_loss+sparsity_weight*spar_loss)
+              "sparse loss:", spar_loss, "loss:", tot_loss)
+
