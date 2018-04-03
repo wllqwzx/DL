@@ -4,9 +4,11 @@ from torch.autograd import Variable
 import torchvision
 
 '''
-In pytorch, Variable contains both data and its gradient.
+In pytorch, Variable contains both data(Tensor) and its gradient.
+Variable is the basic node for constructing a computing graph.
+Variable have almost the same API as Tensor.
 
-Create a Variable require 2 parameters:
+Create a Variable require 3 parameters:
 data            : the Tensor data type to init the value of Variable
 
 requires_grad   : True/False, control whether the Variable is trainable, default value is False,

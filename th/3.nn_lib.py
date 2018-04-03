@@ -55,6 +55,7 @@ print('Conv output size : ', conv_out.size())   # torch.Size([10, 32, 28, 28])
 
 
 #====== weight initialization
+#!!! note that all off-the-shelf NNs in pytorch has already been inited while createing by default.
 '''
 th.nn.init.uniform
 th.nn.init.xavier_normal

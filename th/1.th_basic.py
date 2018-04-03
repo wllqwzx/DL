@@ -3,7 +3,10 @@ import numpy as np
 from torch.autograd import Variable
 '''
 Tensor in pytorch is very different from Tensor in tensorflow.
-In pytorch, Tensor is just a wrap of ndarray.
+In pytorch, Tensor is just a wrap of ndarray. Tensor is similar to numpy but can run on GPUs.
+Like numpy arrays, PyTorch Tensors do not know anything about deep learning or computational graphs 
+or gradients; they are a generic tool for scientific computing.
+
 Variable in pytorch is more like Tensor in tensorflow.
 In tensorflow, Tensor has 3 main forms: Variable(trainable/untrainable), constant, placeholder
 '''
@@ -31,6 +34,8 @@ x.numpy()
 y = th.from_numpy(np.random.rand(5, 3))
 
 #!!! type of tensor and numpy keeps same
+
+
 
 
 
@@ -84,12 +89,17 @@ print(th.mul(x,x))  # torch.Size([5, 3])
 
 
 
+
+
 #=== 4. init a Tensor with a distribution
 #! Tensor's method end with "_" means this in_place operation
 x = th.FloatTensor(5, 3, 2)
 x.normal_(mean=0, std=1)
 x.bernoulli_()
 x.cauchy_(median=0, sigma=1)
+
+
+
 
 
 
