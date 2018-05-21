@@ -10,3 +10,4 @@
 */.vscode/*
 
 *.pyc
+dlib/face_landmark_detection/bin/shape_predictor_68_face_landmarks.dat.bz2
