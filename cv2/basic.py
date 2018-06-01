@@ -5,8 +5,9 @@ import matplotlib.pyplot as plt
 
 #====== read, show and write a image
 img = cv2.imread("test_frcnn_00.jpg", cv2.IMREAD_GRAYSCALE) # note cv2 read color pic in BGR order, not RGB
-#cv2.IMREAD_COLOR
-#cv2.IMREAD_UNCHANGED
+#cv2.IMREAD_COLOR : default: Loads a color image. Any transparency of image will be neglected.
+#cv2.IMREAD_GRAYSCALE : Loads image in grayscale mode
+#cv2.IMREAD_UNCHANGED : Loads image as such including alpha channel
 
 cv2.imshow("title", img)
 while cv2.waitKey(1) & 0xFF != ord('q'):
