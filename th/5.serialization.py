@@ -75,3 +75,41 @@ state = torch.load("state.pkl")
 epoch = state['epoch']
 iters = state['iters']
 optimizer.load_state_dict(state['optimizer_state_dict'])
+
+
+
+#====== complex loading situation
+'''
+1.  source weight: [A,B,C,D,E]
+    target model : [A,B,C]
+'''
+state = torch.load("source_weight.pkl")
+sourcekey = state.keys()
+modelkey = model.state_dict().keys()
+for k in sourcekey:
+    if k not in modelkey:
+        del state[k]
+model.load_state_dict(state)
+
+'''
+2.  source weight: [A,B,C]
+    target model : [A,B,C,D,E]
+'''
+state = torch.load("source_state.pkl")
+model_state = model.state_dict()
+model_state.update(state)
+model.load_state_dict(model_state)
+
+'''
+3.  source weight: [A,B,C,D,E]
+    target model : [A,B,C,F,G]
+'''
+state = torch.load("source_weight.pkl")
+sourcekey = state.keys()
+modelkey = model.state_dict().keys()
+for k in sourcekey:
+    if k not in modelkey:
+        del state[k]
+model_state = model.state_dict()
+model_state.update(state)
+model.load_state_dict(model_state)
